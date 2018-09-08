@@ -148,8 +148,8 @@ pub trait SyncProvider: Send + Sync {
 pub struct TransactionStats {
 	/// Block number where this TX was first seen.
 	pub first_seen: u64,
-	/// Peers it was propagated to.
-	pub propagated_to: BTreeMap<H512, usize>,
+	// Peers it was propagated to.
+	//pub propagated_to: BTreeMap<H512, usize>,
 }
 
 /// Peer connection information

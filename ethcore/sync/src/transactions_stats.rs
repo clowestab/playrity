@@ -25,14 +25,14 @@ type BlockNumber = u64;
 #[derive(Debug, PartialEq, Clone)]
 pub struct Stats {
 	first_seen: BlockNumber,
-	propagated_to: HashMap<NodeId, usize>,
+	//propagated_to: HashMap<NodeId, usize>,
 }
 
 impl Stats {
 	pub fn new(number: BlockNumber) -> Self {
 		Stats {
 			first_seen: number,
-			propagated_to: Default::default(),
+			//propagated_to: Default::default(),
 		}
 	}
 }
@@ -41,10 +41,10 @@ impl<'a> From<&'a Stats> for TransactionStats {
 	fn from(other: &'a Stats) -> Self {
 		TransactionStats {
 			first_seen: other.first_seen,
-			propagated_to: other.propagated_to
-				.iter()
-				.map(|(hash, size)| (*hash, *size))
-				.collect(),
+			//propagated_to: other.propagated_to
+			//	.iter()
+			//	.map(|(hash, size)| (*hash, *size))
+			//	.collect(),
 		}
 	}
 }
@@ -59,8 +59,8 @@ impl TransactionsStats {
 	pub fn propagated(&mut self, hash: &H256, enode_id: Option<NodeId>, current_block_num: BlockNumber) {
 		let enode_id = enode_id.unwrap_or_default();
 		let stats = self.pending_transactions.entry(*hash).or_insert_with(|| Stats::new(current_block_num));
-		let count = stats.propagated_to.entry(enode_id).or_insert(0);
-		*count = count.saturating_add(1);
+		//let count = stats.propagated_to.entry(enode_id).or_insert(0);
+		//*count = count.saturating_add(1);
 	}
 
 	/// Returns propagation stats for given hash or `None` if hash is not known.
@@ -109,10 +109,10 @@ mod tests {
 		let stats = stats.get(&hash);
 		assert_eq!(stats, Some(&Stats {
 			first_seen: 5,
-			propagated_to: hash_map![
-				enodeid1 => 2,
-				enodeid2 => 1
-			],
+			//propagated_to: hash_map![
+			//	enodeid1 => 2,
+			//	enodeid2 => 1
+			//],
 		}));
 	}
 

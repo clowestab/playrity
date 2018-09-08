@@ -154,9 +154,9 @@ pub struct TransactionStats {
 	/// Block no this transaction was first seen.
 	#[serde(rename="firstSeen")]
 	pub first_seen: u64,
-	/// Peers this transaction was propagated to with count.
-	#[serde(rename="propagatedTo")]
-	pub propagated_to: BTreeMap<H512, usize>,
+	// Peers this transaction was propagated to with count.
+	//#[serde(rename="propagatedTo")]
+	//pub propagated_to: BTreeMap<H512, usize>,
 }
 
 impl From<SyncPeerInfo> for PeerInfo {
@@ -181,10 +181,10 @@ impl From<SyncTransactionStats> for TransactionStats {
 	fn from(s: SyncTransactionStats) -> Self {
 		TransactionStats {
 			first_seen: s.first_seen,
-			propagated_to: s.propagated_to
-				.into_iter()
-				.map(|(id, count)| (id.into(), count))
-				.collect(),
+			//propagated_to: s.propagated_to
+			//	.into_iter()
+			//	.map(|(id, count)| (id.into(), count))
+			//	.collect(),
 		}
 	}
 }
@@ -244,12 +244,13 @@ mod tests {
 	fn test_serialize_transaction_stats() {
 		let stats = TransactionStats {
 			first_seen: 100,
-			propagated_to: map![
+			/*propagated_to: map![
 				10.into() => 50
-			],
+			],*/
 		};
 
 		let serialized = serde_json::to_string(&stats).unwrap();
-		assert_eq!(serialized, r#"{"firstSeen":100,"propagatedTo":{"0x0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000a":50}}"#)
+		//assert_eq!(serialized, r#"{"firstSeen":100,"propagatedTo":{"0x0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000a":50}}"#)
+		//assert_eq!(serialized, r#"{"firstSeen":100,"propagatedTo":{"0x0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000a":50}}"#)
 	}
 }
