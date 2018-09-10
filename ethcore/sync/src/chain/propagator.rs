@@ -159,6 +159,7 @@ impl SyncPropagator {
 
 		// sqrt(x)/x scaled to max u32
 		let block_number = io.chain().chain_info().best_block_number;
+		let block_time_stamp = io.chain().chain_info().best_block_timestamp;
 
 		let lucky_peers = {
 			peers.into_iter()
@@ -172,7 +173,7 @@ impl SyncPropagator {
 						// update stats
 						for hash in &all_transactions_hashes {
 							let id = io.peer_session_info(peer_id).and_then(|info| info.id);
-							stats.propagated(hash, id, block_number);
+							stats.propagated(hash, id, block_number, block_time_stamp);
 						}
 						peer_info.last_sent_transactions = all_transactions_hashes.clone();
 						return Some((peer_id, all_transactions_hashes.len(), all_transactions_rlp.clone()));

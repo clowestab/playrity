@@ -25,13 +25,15 @@ type BlockNumber = u64;
 #[derive(Debug, PartialEq, Clone)]
 pub struct Stats {
 	first_seen: BlockNumber,
+	first_seen_timestamp: u64
 	//propagated_to: HashMap<NodeId, usize>,
 }
 
 impl Stats {
-	pub fn new(number: BlockNumber) -> Self {
+	pub fn new(number: BlockNumber, timestamp) -> Self {
 		Stats {
 			first_seen: number,
+			first_seen_timestamp: timestamp
 			//propagated_to: Default::default(),
 		}
 	}
@@ -41,6 +43,7 @@ impl<'a> From<&'a Stats> for TransactionStats {
 	fn from(other: &'a Stats) -> Self {
 		TransactionStats {
 			first_seen: other.first_seen,
+			first_seen_timestamp: other.first_seen_timestamp
 			//propagated_to: other.propagated_to
 			//	.iter()
 			//	.map(|(hash, size)| (*hash, *size))
@@ -56,9 +59,9 @@ pub struct TransactionsStats {
 
 impl TransactionsStats {
 	/// Increases number of propagations to given `enodeid`.
-	pub fn propagated(&mut self, hash: &H256, enode_id: Option<NodeId>, current_block_num: BlockNumber) {
+	pub fn propagated(&mut self, hash: &H256, enode_id: Option<NodeId>, current_block_num: BlockNumber, current_block_timestamp: u64) {
 		let enode_id = enode_id.unwrap_or_default();
-		let stats = self.pending_transactions.entry(*hash).or_insert_with(|| Stats::new(current_block_num));
+		let stats = self.pending_transactions.entry(*hash).or_insert_with(|| Stats::new(current_block_num, current_block_timestamp));
 		//let count = stats.propagated_to.entry(enode_id).or_insert(0);
 		//*count = count.saturating_add(1);
 	}
