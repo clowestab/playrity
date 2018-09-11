@@ -30,7 +30,7 @@ pub struct Stats {
 }
 
 impl Stats {
-	pub fn new(number: BlockNumber, timestamp) -> Self {
+	pub fn new(number: BlockNumber, timestamp: u64) -> Self {
 		Stats {
 			first_seen: number,
 			first_seen_timestamp: timestamp

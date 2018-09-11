@@ -216,7 +216,7 @@ impl SyncPropagator {
 					let id = io.peer_session_info(peer_id).and_then(|info| info.id);
 					for hash in &to_send {
 						// update stats
-						stats.propagated(hash, id, block_number);
+						stats.propagated(hash, id, block_number, block_time_stamp);
 					}
 
 					peer_info.last_sent_transactions = all_transactions_hashes
