@@ -154,6 +154,9 @@ pub struct TransactionStats {
 	/// Block no this transaction was first seen.
 	#[serde(rename="firstSeen")]
 	pub first_seen: u64,
+	/// Timestamp of Block this transaction was first seen.
+	#[serde(rename="firstSeenTimestamp")]
+	pub first_seen_timestamp: u64,
 	// Peers this transaction was propagated to with count.
 	//#[serde(rename="propagatedTo")]
 	//pub propagated_to: BTreeMap<H512, usize>,
@@ -181,6 +184,7 @@ impl From<SyncTransactionStats> for TransactionStats {
 	fn from(s: SyncTransactionStats) -> Self {
 		TransactionStats {
 			first_seen: s.first_seen,
+			first_seen_timestamp: s.first_seen_timestamp
 			//propagated_to: s.propagated_to
 			//	.into_iter()
 			//	.map(|(id, count)| (id.into(), count))
